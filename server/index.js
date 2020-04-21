@@ -5,7 +5,6 @@ const cors = require('cors')
 const dotenv = require('dotenv');
 const mwPublicRoute = require('./middleware/public-route')
 const mwCookie = require('./middleware/cookie')
-
 const { findAll, findById } = require('./controller/user')
 dotenv.config();
 
@@ -24,7 +23,7 @@ const middleware = [
 
 app
   .use(middleware)
-  .get('/user', findAll)
-  .get('/user/:pid', findById)
+  .get('/api/user', findAll)
+  .get('/api/user/:pid', findById)
 
 app.listen(port, () => console.log(`server online port ${port}`))
