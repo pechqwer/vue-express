@@ -1,6 +1,6 @@
+global.mongo = require('mongodb').MongoClient
 const express = require('express')
 const cookieParser = require('cookie-parser')
-
 const cors = require('cors')
 const dotenv = require('dotenv');
 const mwPublicRoute = require('./middleware/public-route')
@@ -25,5 +25,6 @@ app
   .use(middleware)
   .get('/api/user', findAll)
   .get('/api/user/:pid', findById)
-
 app.listen(port, () => console.log(`server online port ${port}`))
+
+module.exports = app
