@@ -46,8 +46,28 @@ const findById = async (req, res) => {
 
   return res.status(200).send(data[0]).end()
 }
+
+const addOneRecord = async (req, res) => {
+  const con = await _connect()
+  const user = con.db('teddy').collection('user')
+  const data = mapFieldUser(req.body)
+  await user.insertOne(data, (err, _) => {
+    if (err) return res.status(exception_service.status).send(exception_service.info).end()
+  })
+  return res.status(200).end()
+}
+
+const delManyRecord = async (req, res) => {
+  const con = await _connect()
+  const user = con.db('teddy').collection('user')
+  const data = mapTypeofUser(req.body)
+  const result = await user.deleteMany(data, (err, _) => {
+    if (err) return res.status(exception_service.status).send(exception_service.info).end()
+  })
+  console.log(result)
+  return res.status(200).end()
 }
 
 module.exports = {
-  findAll, findById
+  findAll, findById, addOneRecord, delManyRecord
 }
