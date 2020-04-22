@@ -6,7 +6,8 @@ module.exports = () => {
     switch (req.method) {
       case "GET": isPublic = ['/api/user'].some(ele => { return req.originalUrl.includes(ele) }); break
       case "POST": break
-      default: res.send(exception_author.info).status(exception_author.status).end(); break
+      case "DELETE": break
+      default: res.status(exception_author.status).send(exception_author.info).end(); break
     }
 
     req.isPublic = isPublic
