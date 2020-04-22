@@ -1,7 +1,7 @@
-const mongo = require('mongodb').MongoClient
 const _empty = require('lodash.isempty')
-const { not_found, bad_data } = require('../utils/exception')
-const { mapFieldUser } = require('../utils/mapQuery')
+const { not_found, bad_data, exception_service } = require('../utils/exception')
+const { mapQueryUser } = require('../utils/mapQuery')
+const { mapFieldUser, mapTypeofUser } = require('../utils/mapField')
 
 const _connect = async () => {
   return await mongo.connect(`mongodb+srv://${process.env.USER_TEDDY}:${process.env.PASS_TEDDY}@cluster0-mq8f9.mongodb.net/test`,
@@ -13,36 +13,39 @@ const _connect = async () => {
 }
 
 const findAll = async (req, res) => {
-  if (_empty(req.query)) return res.send({ info: 'query-string is least one' }).status(bad_data.status)
-  if (!mapFieldUser(req.query)) return res.send({ info: 'query-string is not work' }).status(bad_data.status)
+  if (_empty(req.query)) return res.status(bad_data.status).send({ info: 'query-string is least one' }).end()
+  if (!mapQueryUser(req.query)) return res.status(bad_data.status).send({ info: 'query-string is not work' }).end()
 
   const con = await _connect()
   const user = con.db('teddy').collection('user')
-  const data = await user.find(_empty(req.query) ? {} : req.query).toArray()
+  const query = mapTypeofUser(req.query)
+  const data = await user.find(query).toArray()
 
   if (data.length === 0) {
     const _syntax = not_found('user')
-    return res.send(_syntax.info).status(_syntax.status)
+    return res.status(_syntax.status).send(_syntax.info).end()
   }
 
-  return res.send(data).status(200)
+  return res.status(200).send(data).end()
 }
 
 const findById = async (req, res) => {
-  if (_empty(req.params)) return res.send({ info: 'parameter is not true' }).status(bad_data.status)
-  if (!_empty(req.query)) return res.send({ info: 'primary key is not support query-string' }).status(bad_data.status)
-  if (!mapFieldUser(req.query)) return res.send({ info: 'query-string is not work' }).status(bad_data.status)
+  if (_empty(req.params)) return res.status(bad_data.status).send({ info: 'parameter is not true' }).end()
+  if (!_empty(req.query)) return res.status(bad_data.status).send({ info: 'primary key is not support query-string' }).end()
+  if (!mapQueryUser(req.query)) return res.status(bad_data.status).send({ info: 'query-string is not work' }).end()
 
   const con = await _connect()
   const user = con.db('teddy').collection('user')
-  const data = await user.find(req.params).toArray()
+  const query = mapTypeofUser(req.params)
+  const data = await user.find(query).toArray()
 
   if (data.length !== 1) {
     const _syntax = not_found('user')
-    return res.send(_syntax.info).status(_syntax.status)
+    return res.status(_syntax.status).send(_syntax.info).end()
   }
 
-  return res.send(data[0]).status(200)
+  return res.status(200).send(data[0]).end()
+}
 }
 
 module.exports = {
