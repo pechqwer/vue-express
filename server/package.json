@@ -4,9 +4,9 @@
   "description": "express-vue",
   "main": "index.js",
   "scripts": {
-    "start": "node server/index.js",
-    "dev": "nodemon server/index.js",
-    "test": "mocha server/test/*.js"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "mocha src/test/*.js"
   },
   "author": "skyl2eport",
   "license": "ISC",

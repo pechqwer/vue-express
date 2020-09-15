@@ -1,5 +1,5 @@
-const withResolve = async (api) => {
-  return await new Promise((resolve, _) => {
+const withResolve = (api) => {
+  return new Promise((resolve, _) => {
     api()
       .then(res => {
         resolve([null, res])

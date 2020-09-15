@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+  api-login: 
+    build: ../server
+    container_name: api-server
+    env_file:
+      - ../.env
+    volumes:
+      - ../server:/app/src
+    restart: always

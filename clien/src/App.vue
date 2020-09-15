@@ -48,7 +48,7 @@ export default {
   }),
   methods: {
     async callapi() {
-      const b = await getUser('312312')
+      const b = await getUser('1234')
       alert(JSON.stringify(b))
     }
   }
