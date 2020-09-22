@@ -1,10 +1,10 @@
 const withResolve = (api) => {
-  return new Promise((resolve, _) => {
+  return new Promise((resolve) => {
     api()
-      .then(res => {
+      .then((res) => {
         resolve([null, res])
       })
-      .catch(err => {
+      .catch((err) => {
         resolve([err, null])
       })
   })

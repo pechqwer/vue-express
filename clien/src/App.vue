@@ -17,8 +17,7 @@
       <v-flex xs3 class="text-center" mt-5>
         <v-card flat>
           <v-btn text @click="callapi">search</v-btn>
-        </v-card>
-        
+        </v-card>  
       </v-flex>
     </v-layout> -->
     </v-app-bar>
@@ -33,7 +32,8 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+
+import HelloWorld from './components/HelloWorld.vue';
 import getUser from './api/getUser'
 
 export default {

@@ -5,3 +5,5 @@ WORKDIR /app/
 COPY . .
 
 RUN npm install --verbose
+
+CMD [ "npm", "start" ]
